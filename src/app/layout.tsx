@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { FloatingActions } from "@/components/floating-actions";
+import { RootLayoutClient } from "@/components/root-layout-client";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "ChainVault",
-  description: "Trustless microfinance demo on Solana-inspired flows",
+  description: "Trustless microfinance for the underbanked on Solana",
 };
 
 export default function RootLayout({
@@ -29,7 +30,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        <RootLayoutClient>{children}</RootLayoutClient>
         <FloatingActions />
       </body>
     </html>

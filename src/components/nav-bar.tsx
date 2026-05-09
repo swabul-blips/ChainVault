@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotificationCenter } from "@/components/notification-center";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { WalletConnect } from "@/components/wallet-connect";
 
 const links = [
   { href: "/", label: "Home" },
@@ -41,9 +42,12 @@ export function NavBar() {
             );
           })}
         </nav>
-        <div className="hidden items-center gap-2 md:flex">
-          <ThemeToggle />
-          <NotificationCenter />
+        <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 md:flex">
+            <ThemeToggle />
+            <NotificationCenter />
+          </div>
+          <WalletConnect />
         </div>
       </div>
       <nav className="mobile-dock md:hidden">
