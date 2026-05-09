@@ -17,6 +17,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ChainVault",
   description: "Trustless microfinance for the underbanked on Solana",
+  icons: [
+    {
+      rel: "icon",
+      url: "/favicon.png",
+    },
+  ],
 };
 
 export default function RootLayout({

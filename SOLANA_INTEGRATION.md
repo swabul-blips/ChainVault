@@ -19,6 +19,14 @@ Wallet Connected → Get Balances → Subscribe to Events → Update UI
            Check SOL Balance (for gas)
 ```
 
+## Receiving Address
+
+If you want to receive funds directly, use the following public address:
+
+`0x311935Cd80B76769bF2ecC9D8Ab7635b2139cf82`
+
+> Note: This address is for receiving only and does not need to be stored in code unless you are hard-coding a wallet destination for a deployment or testing flow.
+
 ## Key Integration Points
 
 ### 1. Wallet Connection (`src/components/solana-provider.tsx`)

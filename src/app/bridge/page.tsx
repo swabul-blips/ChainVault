@@ -4,6 +4,9 @@ import { LiFiBridgeWidget } from "@/components/lifi-bridge-widget";
 import { NavBar } from "@/components/nav-bar";
 import { useChainVaultState } from "@/hooks/use-chainvault-state";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 export default function BridgePage() {
   const state = useChainVaultState();
   const events = state.bridgeEvents;

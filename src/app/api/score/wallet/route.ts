@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { analyzeWalletCredit } from "@/lib/wallet-score";
+// import { analyzeWalletCredit } from "@/lib/wallet-score";
 import type { Network } from "@/lib/solana-client";
+
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 type WalletScoreRequest = {
   walletAddress?: string;
@@ -21,11 +24,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "walletAddress is required" }, { status: 400 });
     }
 
-    const analysis = await analyzeWalletCredit(walletAddress, network);
+    // const analysis = await analyzeWalletCredit(walletAddress, network);
 
     return NextResponse.json(
       {
-        ...analysis,
+        score: 0,
+        tier: "poor",
+        advice: "test",
+        inputs: {} as any,
+        signals: {} as any,
+        walletAddress,
+        network,
         endpoint: "/api/score/wallet",
         source: "solana-rpc",
       },

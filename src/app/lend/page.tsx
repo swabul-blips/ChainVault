@@ -4,6 +4,8 @@ import { NavBar } from "@/components/nav-bar";
 import { PoolSelector } from "@/components/pool-selector";
 import { useChainVaultState } from "@/hooks/use-chainvault-state";
 
+export const dynamic = 'force-dynamic';
+
 export default function LendPage() {
   const state = useChainVaultState();
   const activeLoans = state.loans.filter((loan) => loan.status === "Active").length;

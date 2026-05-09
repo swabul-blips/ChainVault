@@ -11,6 +11,8 @@ import { applyScoreDelta } from "@/lib/scoring";
 import { addNotification, announceVoice, saveState } from "@/lib/storage";
 import type { WalletCreditAnalysis } from "@/lib/wallet-score";
 
+export const dynamic = 'force-dynamic';
+
 export default function ScorePage() {
   const state = useChainVaultState();
   const wallet = useSolanaWallet();

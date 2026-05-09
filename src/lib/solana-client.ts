@@ -1,9 +1,6 @@
 import { Connection, PublicKey, Transaction, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { getAssociatedTokenAddress, getMint } from "@solana/spl-token";
 
-const USDC_MINT = new PublicKey("EPjFWaLb3odccxFSrv3C6MrT3AxYqP1Vm2KaMtWvcs"); // USDC on mainnet
-const USDC_MINT_DEVNET = new PublicKey("4zMMC9srt5Ri5X14GAgIYY3W6YvV3BJKBjAPtVooS6T"); // USDC on devnet
-
 export type Network = "mainnet" | "devnet" | "localnet";
 
 export const NETWORKS = {
@@ -17,6 +14,8 @@ export function getConnection(network: Network = "devnet"): Connection {
 }
 
 export function getUsdcMint(network: Network = "devnet"): PublicKey {
+  const USDC_MINT = new PublicKey("EPjFWaLb3odccxFSrv3C6MrT3AxYqP1Vm2KaMtWvcs"); // USDC on mainnet
+  const USDC_MINT_DEVNET = new PublicKey("4zMMC9srt5Ri5X14GAgIYY3W6YvV3BJKBjAPtVooS6T"); // USDC on devnet
   return network === "mainnet" ? USDC_MINT : USDC_MINT_DEVNET;
 }
 

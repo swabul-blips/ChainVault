@@ -50,6 +50,12 @@ type ParsedTransactionLike = {
   };
 };
 
+type InstructionLike = {
+  program?: unknown;
+  programId?: unknown;
+  accounts?: unknown[];
+};
+
 type ParsedTokenAccountEntry = {
   account?: {
     data?: {
@@ -99,12 +105,13 @@ function analyzeTransactionSample(transactions: ParsedTransactionLike[], walletA
     const accountKeys = Array.isArray(message?.accountKeys) ? message.accountKeys : [];
 
     for (const instruction of instructions) {
-      const program = normalizeProgramName(instruction?.program ?? instruction?.programId);
+      const instr = instruction as InstructionLike;
+      const program = normalizeProgramName(instr?.program ?? instr?.programId);
       if (program && !EXCLUDED_PROGRAMS.has(program)) {
         programNames.add(program);
       }
 
-      const accounts = Array.isArray(instruction?.accounts) ? instruction.accounts : [];
+      const accounts = Array.isArray(instr?.accounts) ? instr.accounts : [];
       for (const account of accounts) {
         const address = toBase58(account);
         if (address && address !== walletAddress) {
@@ -140,7 +147,12 @@ function buildInputsFromSignals(signals: WalletCreditSignals, walletAgeMonths: n
 }
 
 export async function analyzeWalletCredit(walletAddress: string, network: Network = "devnet"): Promise<WalletCreditAnalysis> {
-  const publicKey = new PublicKey(walletAddress);
+  let publicKey: PublicKey;
+  try {
+    publicKey = new PublicKey(walletAddress);
+  } catch (error) {
+    throw new Error(`Invalid wallet address: ${walletAddress}`);
+  }
   const connection = getConnection(network);
 
   const emptyTokenAccounts: { value: ParsedTokenAccountEntry[] } = { value: [] };

@@ -7,6 +7,8 @@ import { OnboardingWizard } from "@/components/onboarding-wizard";
 import { useChainVaultState } from "@/hooks/use-chainvault-state";
 import { NavBar } from "@/components/nav-bar";
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   const state = useChainVaultState();
   const repaymentRate =

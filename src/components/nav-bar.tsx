@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NotificationCenter } from "@/components/notification-center";
@@ -16,13 +18,25 @@ const links = [
 ];
 
 export function NavBar() {
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/60 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="animate-glow text-lg font-semibold text-cyan-300">
-          ChainVault
+        <Link href="/" className="flex items-center gap-3 animate-glow text-lg font-semibold text-cyan-300">
+          <Image
+            src="/chainvault-logo.png"
+            alt="ChainVault logo"
+            width={36}
+            height={36}
+            className="rounded-full border border-white/10 bg-slate-900/80 p-1"
+          />
+          <span>ChainVault</span>
         </Link>
         <nav className="hidden gap-4 text-sm md:flex">
           {links.map((link) => {
@@ -47,7 +61,7 @@ export function NavBar() {
             <ThemeToggle />
             <NotificationCenter />
           </div>
-          <WalletConnect />
+          {mounted && <WalletConnect />}
         </div>
       </div>
       <nav className="mobile-dock md:hidden">

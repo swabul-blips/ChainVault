@@ -6,6 +6,8 @@ import { useChainVaultState } from "@/hooks/use-chainvault-state";
 import { addNotification, announceVoice, updateState } from "@/lib/storage";
 import { computeAccruedInterest, projectedCompletionDate, weeklyPace } from "@/lib/vaults";
 
+export const dynamic = 'force-dynamic';
+
 export default function SavePage() {
   const state = useChainVaultState();
   const activeVault = state.vaults[0];
