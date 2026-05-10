@@ -79,6 +79,21 @@ export function NavBar() {
               }}
             />
             <span>ChainVault</span>
+            <span
+              style={{
+                fontSize: "0.6rem",
+                fontWeight: 700,
+                background: "rgba(34,211,238,0.15)",
+                border: "1px solid rgba(34,211,238,0.3)",
+                color: "#67e8f9",
+                borderRadius: "999px",
+                padding: "0.1rem 0.45rem",
+                letterSpacing: "0.04em",
+                marginLeft: "0.15rem",
+              }}
+            >
+              DEVNET
+            </span>
           </Link>
 
           {/* DESKTOP NAV LINKS */}

@@ -72,7 +72,7 @@ export type UserPreferences = {
 
 const defaultState: ChainVaultState = {
   walletAddress: "",
-  chainScore: 0,
+  chainScore: 540,
   totalDeposits: 0,
   totalLoansIssued: 0,
   totalRepaid: 0,
@@ -80,7 +80,15 @@ const defaultState: ChainVaultState = {
   loans: [],
   bridgeEvents: [],
   vaults: [],
-  notifications: [],
+  notifications: [
+    {
+      id: "welcome_001",
+      type: "system",
+      message: "Welcome to ChainVault! Connect your Solana wallet to get a live ChainScore.",
+      createdAt: new Date().toISOString(),
+      read: false,
+    },
+  ],
   onboardingStep: 1,
   preferences: {
     voiceEnabled: true,
