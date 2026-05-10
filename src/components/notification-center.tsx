@@ -32,7 +32,7 @@ export function NotificationCenter() {
         ) : null}
       </button>
       {open ? (
-        <div className="glass-card absolute right-0 mt-2 w-80 p-3">
+        <div className="glass-card absolute right-0 mt-2 w-80 p-3 z-50">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-sm font-semibold">Notifications</p>
             <button type="button" className="text-xs text-cyan-300" onClick={markAllRead}>

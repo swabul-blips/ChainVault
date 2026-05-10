@@ -26,19 +26,23 @@ export function NavBar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/60 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 animate-glow text-lg font-semibold text-cyan-300">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 gap-3">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 shrink-0 animate-glow text-base font-semibold text-cyan-300">
           <Image
             src="/chainvault-logo.png"
             alt="ChainVault logo"
-            width={36}
-            height={36}
-            className="rounded-full border border-white/10 bg-slate-900/80 p-1"
+            width={32}
+            height={32}
+            className="rounded-full border border-white/10 bg-slate-900/80 p-0.5"
+            priority
           />
-          <span>ChainVault</span>
+          <span className="hidden sm:inline">ChainVault</span>
         </Link>
-        <nav className="hidden gap-4 text-sm md:flex">
+
+        {/* Desktop nav links */}
+        <nav className="hidden md:flex gap-1 text-sm">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -47,8 +51,8 @@ export function NavBar() {
                 href={link.href}
                 className={
                   active
-                    ? "rounded-full bg-cyan-400/15 px-3 py-1 text-cyan-200"
-                    : "rounded-full px-3 py-1 text-slate-300 transition hover:bg-white/5 hover:text-cyan-200"
+                    ? "rounded-full bg-cyan-400/15 px-3 py-1.5 text-cyan-200 font-medium"
+                    : "rounded-full px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-cyan-200"
                 }
               >
                 {link.label}
@@ -56,19 +60,28 @@ export function NavBar() {
             );
           })}
         </nav>
-        <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 md:flex">
+
+        {/* Right side: theme, notifications, wallet */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="hidden md:flex items-center gap-2">
             <ThemeToggle />
             <NotificationCenter />
           </div>
+          {/* Wallet button – always visible (mounted guard handles SSR) */}
           {mounted && <WalletConnect />}
         </div>
       </div>
+
+      {/* Mobile bottom dock – links only, wallet is in the top bar */}
       <nav className="mobile-dock md:hidden">
         {links.map((link) => {
           const active = pathname === link.href;
           return (
-            <Link key={link.href} href={link.href} className={active ? "mobile-dock-item active" : "mobile-dock-item"}>
+            <Link
+              key={link.href}
+              href={link.href}
+              className={active ? "mobile-dock-item active" : "mobile-dock-item"}
+            >
               {link.label}
             </Link>
           );

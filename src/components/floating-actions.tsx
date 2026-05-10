@@ -13,7 +13,7 @@ export function FloatingActions() {
   }
 
   return (
-    <div className="fixed right-5 bottom-5 z-30 flex flex-col items-end gap-2">
+    <div className="fixed right-4 bottom-20 md:bottom-5 z-50 flex flex-col items-end gap-2">
       {notice ? <div className="glass-card px-3 py-2 text-xs text-cyan-200">{notice}</div> : null}
       <button
         type="button"

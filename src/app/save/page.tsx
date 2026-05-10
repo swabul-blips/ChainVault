@@ -63,7 +63,7 @@ export default function SavePage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <NavBar />
-      <main className="animate-fade-scale mx-auto grid max-w-7xl gap-5 px-6 py-8 pb-24 lg:grid-cols-[260px_1fr_290px]">
+      <main className="animate-fade-scale mx-auto grid max-w-7xl gap-5 px-6 py-8 pb-24 md:pb-8 lg:grid-cols-[260px_1fr_290px]">
         <aside className="glass-card p-4">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">My Vaults</h2>
