@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NotificationCenter } from "@/components/notification-center";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { WalletConnect } from "@/components/wallet-connect";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const links = [
   { href: "/", label: "Home" },
@@ -19,6 +17,7 @@ const links = [
 
 export function NavBar() {
   const [mounted, setMounted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,74 +25,188 @@ export function NavBar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-      {/* 3-column grid: logo | nav links | actions — nothing can overlap */}
-      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3">
-
-        {/* LEFT — Logo (always shrinks last) */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 animate-glow text-base font-semibold text-cyan-300 whitespace-nowrap"
+    <>
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          width: "100%",
+          borderBottom: "1px solid rgba(255,255,255,0.10)",
+          background: "rgba(2, 6, 23, 0.92)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 1.25rem",
+            height: "60px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1rem",
+          }}
         >
-          <Image
-            src="/chainvault-logo.png"
-            alt="ChainVault logo"
-            width={30}
-            height={30}
-            className="rounded-full border border-white/10 bg-slate-900/80 p-0.5"
-            priority
-          />
-          <span>ChainVault</span>
-        </Link>
+          {/* LOGO */}
+          <Link
+            href="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              textDecoration: "none",
+              color: "#67e8f9",
+              fontWeight: 700,
+              fontSize: "1.1rem",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            <Image
+              src="/chainvault-logo.png"
+              alt="ChainVault"
+              width={32}
+              height={32}
+              priority
+              style={{
+                borderRadius: "50%",
+                border: "1px solid rgba(255,255,255,0.15)",
+                background: "rgba(15,23,42,0.8)",
+                padding: "2px",
+              }}
+            />
+            <span>ChainVault</span>
+          </Link>
 
-        {/* CENTER — Nav links, hidden on mobile (mobile uses bottom dock) */}
-        <nav className="hidden md:flex items-center justify-center gap-1 text-sm overflow-hidden">
-          {links.map((link) => {
-            const active = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={
-                  active
-                    ? "rounded-full bg-cyan-400/15 px-3 py-1.5 text-cyan-200 font-medium whitespace-nowrap"
-                    : "rounded-full px-3 py-1.5 text-slate-300 transition hover:bg-white/5 hover:text-cyan-200 whitespace-nowrap"
-                }
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-        </nav>
+          {/* DESKTOP NAV LINKS */}
+          <nav
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              flexShrink: 1,
+              overflow: "hidden",
+            }}
+            className="desktop-nav"
+          >
+            {links.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{
+                    padding: "0.35rem 0.75rem",
+                    borderRadius: "999px",
+                    fontSize: "0.85rem",
+                    fontWeight: active ? 600 : 400,
+                    color: active ? "#a5f3fc" : "#94a3b8",
+                    background: active ? "rgba(34,211,238,0.12)" : "transparent",
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                    transition: "all 150ms ease",
+                  }}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* On mobile the center column is empty — wallet sits in RIGHT column */}
-        <div className="md:hidden" />
+          {/* RIGHT — Wallet + Hamburger */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+            {/* Wallet button — always shown */}
+            {mounted && (
+              <WalletMultiButton
+                style={{
+                  height: "36px",
+                  fontSize: "0.78rem",
+                  padding: "0 1rem",
+                  borderRadius: "999px",
+                  background: "linear-gradient(120deg, #0891b2, #2563eb)",
+                  border: "none",
+                  fontFamily: "inherit",
+                  fontWeight: 600,
+                  color: "#fff",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              />
+            )}
 
-        {/* RIGHT — Theme toggle, notifications, wallet button */}
-        <div className="flex items-center gap-2 justify-end whitespace-nowrap">
-          <div className="hidden md:flex items-center gap-2">
-            <ThemeToggle />
-            <NotificationCenter />
-          </div>
-          {mounted && <WalletConnect />}
-        </div>
-      </div>
-
-      {/* Mobile bottom dock */}
-      <nav className="mobile-dock md:hidden">
-        {links.map((link) => {
-          const active = pathname === link.href;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={active ? "mobile-dock-item active" : "mobile-dock-item"}
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+              className="hamburger-btn"
+              style={{
+                display: "none",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: "8px",
+                color: "#94a3b8",
+                cursor: "pointer",
+                padding: "0.4rem 0.5rem",
+                fontSize: "1.1rem",
+                lineHeight: 1,
+              }}
             >
-              {link.label}
-            </Link>
-          );
-        })}
-      </nav>
-    </header>
+              {menuOpen ? "✕" : "☰"}
+            </button>
+          </div>
+        </div>
+
+        {/* MOBILE DROPDOWN MENU */}
+        {menuOpen && (
+          <div
+            style={{
+              background: "rgba(2, 6, 23, 0.97)",
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              padding: "0.75rem 1.25rem 1rem",
+            }}
+            className="mobile-menu"
+          >
+            {links.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "0.6rem 0.75rem",
+                    borderRadius: "8px",
+                    fontSize: "0.9rem",
+                    fontWeight: active ? 600 : 400,
+                    color: active ? "#a5f3fc" : "#cbd5e1",
+                    background: active ? "rgba(34,211,238,0.10)" : "transparent",
+                    textDecoration: "none",
+                    marginBottom: "0.25rem",
+                  }}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </header>
+
+      {/* Inline responsive styles */}
+      <style>{`
+        .desktop-nav { display: flex !important; }
+        .hamburger-btn { display: none !important; }
+        .mobile-menu { display: block; }
+
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .hamburger-btn { display: block !important; }
+        }
+      `}</style>
+    </>
   );
 }
